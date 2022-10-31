@@ -147,9 +147,8 @@ namespace s4ce
                 txtSimplifiedCH4, txtSimplifiedD, txtSimplifiedECO2, txtSimplifiedPne, txtSimplifiedWd
             };
 
-            Assembly asmThis = Assembly.GetCallingAssembly();
-            Version verThis = asmThis.GetName().Version;
-            this.Text = String.Format("{0} R{2}", GetAssemblyAttribute<AssemblyTitleAttribute>(a => a.Title), verThis.Minor, verThis.Revision);//, verThis);
+            Type? versionInfo = Assembly.GetExecutingAssembly().GetType("GitVersionInformation");
+            this.Text = String.Format("{0} {1}", GetAssemblyAttribute<AssemblyTitleAttribute>(a => a.Title), versionInfo.GetField("FullSemVer")?.GetValue(null).ToString());//, verThis);
 
 
             //Green
